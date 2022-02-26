@@ -13,15 +13,15 @@ For this project, we will be using data from the [Waymo Open dataset](https://wa
 The data you will use for training, validation and testing is organized as follow:
 ```
 /home/workspace/data/waymo
-    - training_and_validation - contains 97 files to train and validate your models
+	- training_and_validation - contains 97 files to train and validate your models
     - train: contain the train data (empty to start)
     - val: contain the val data (empty to start)
     - test - contains 3 files to test your model and create inference videos
 ```
-
 The `training_and_validation` folder contains file that have been downsampled: we have selected one every 10 frames from 10 fps videos. The `testing` folder contains frames from the 10 fps video without downsampling.
-
+```
 You will split this `training_and_validation` data into `train`, and `val` sets by completing and executing the `create_splits.py` file.
+
 
 ### Experiments
 The experiments folder will be organized as follow:
@@ -79,7 +79,7 @@ In the class, we talked about cross-validation and the importance of creating me
 
 Use the following command to run the script once your function is implemented:
 ```
-python create_splits.py --data-dir /home/workspace/data
+python create_splits.py --data_dir /home/workspace/data
 ```
 
 ### Edit the config file
@@ -141,20 +141,43 @@ python inference_video.py --labelmap_path label_map.pbtxt --model_path experimen
 ## Submission Template
 
 ### Project overview
-This section should contain a brief description of the project and what we are trying to achieve. Why is object detection such an important component of self driving car systems?
+
+Object detection is at the core of self driving car perception system to ensure safety and operation. The project uses deep learning algorithm to detect object in urban environment.
+First, we took a close look at the Waymo dataset and examine the content in the image. Three classes of object were set as detection object, cars, pedestrians, and cyclist. The findings led us to implement a cross validation strategy by splitting our dataset in 8:1:1 ratio to training,validation and test set respectively. We then performed training and validation using Project Workspace GPUs. Varies forms of Data Augmentation were also performed to help enhance model performance.
+
+
 
 ### Set up
-This section should contain a brief description of the steps to follow to run the code for this repository.
+In this project, I used Project Workspace and followed set up instruction in README.
+
 
 ### Dataset
 #### Dataset analysis
-This section should contain a quantitative and qualitative description of the dataset. It should include images, charts and other visualizations.
+The Waymo Dataset provided in the workspace consisted of image in urban environment. We can see different light, weather condition, blur condition applied to images.
+There were three main classes of bounding box, cars, pedestrian and cyclist. 
+A 10 image batch was taken from the sample dataset each time and we saw images reflecting random distribution of scene in urban environment.
+We draw 10000 random sample using shuffle function from the dataset. In the image in the EDA notebook, we can see car class takes around 70-80 percent of the overall labels, much more than pedestrian class and cyclist only take a minor portion of the overall class distribution.
+
 #### Cross validation
-This section should detail the cross validation strategy and justify your approach.
+We implement a 8:1:1 cross validation strategy in term of training/validation/test data set. Each set has its own folder in the data/waymo folder, we used this split to make sure a proper training while making sure the model doesn't overfit.
 
 ### Training
 #### Reference experiment
-This section should detail the results of the reference experiment. It should includes training metrics and a detailed explanation of the algorithm's performances.
+We performed tranfer learning using SSD_Resnet model with pretrained model configuration. The results of Loss and DetectionBox_Recall/Precision will be served as baselines. The curve in orange(from Tensorboard) is Loss in training steps and blue dot is Loss in evaluation.
+The model were trained at default 2500 steps and encounter Out of memory and time out problems with the evalution process.
+However the preliminary result indicated the loss is still very high at around 0.17 for training.
+We therefore added mutliple data augmentation strategies to the pipeline in order to increase robustness of the model.
 
 #### Improve on the reference
-This section should highlight the different strategies you adopted to improve your model. It should contain relevant figures and details of your findings.
+We tried random pixel scale, add random black patches and gray scale image conversion based on preprocess.proto github link.
+
+The below processing operations are added in data augmentation new config file 
+random_horizontal_flip 
+random_crop_image
+random_rgb_to_gray
+random_black_patches
+random_pixel_value_scale
+random_distort_color
+random_jpeg_quality
+
+Result are exported to animation gif and encounter ffmege failed bug(prompted please use Pillow) probably due to OOM problem
