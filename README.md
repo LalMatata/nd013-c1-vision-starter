@@ -158,6 +158,12 @@ There were three main classes of bounding box, cars, pedestrian and cyclist.
 A 10 image batch was taken from the sample dataset each time and we saw images reflecting random distribution of scene in urban environment.
 We draw 10000 random sample using shuffle function from the dataset. In the image in the EDA notebook, we can see car class takes around 70-80 percent of the overall labels, much more than pedestrian class and cyclist only take a minor portion of the overall class distribution.
 
+<img width="380" alt="截屏2022-02-27 下午12 15 19" src="https://user-images.githubusercontent.com/27455919/155867973-77f6defc-cce6-4078-9f9a-bb8b75c34e1e.png">
+
+<img width="428" alt="截屏2022-02-27 下午12 16 17" src="https://user-images.githubusercontent.com/27455919/155867989-5cdc057f-736c-4cf8-bcda-533cbd584e86.png">
+
+
+
 #### Cross validation
 We implement a 8:1:1 cross validation strategy in term of training/validation/test data set. Each set has its own folder in the data/waymo folder, we used this split to make sure a proper training while making sure the model doesn't overfit.
 
@@ -167,6 +173,11 @@ We performed tranfer learning using SSD_Resnet model with pretrained model confi
 The model were trained at default 2500 steps and encounter Out of memory and time out problems with the evalution process.
 However the preliminary result indicated the loss is still very high at around 0.17 for training.
 We therefore added mutliple data augmentation strategies to the pipeline in order to increase robustness of the model.
+
+I tried 2500 steps and then 5000 steps.
+
+<img width="1066" alt="截屏2022-02-27 上午2 37 09" src="https://user-images.githubusercontent.com/27455919/155867999-93ddb286-2eac-4f80-bcfd-c4a605deaab2.png">
+<img width="1437" alt="截屏2022-02-27 上午2 28 53" src="https://user-images.githubusercontent.com/27455919/155868056-1b1853fc-18dc-428f-bca0-4d1bc7291999.png">
 
 #### Improve on the reference
 We tried random pixel scale, add random black patches and gray scale image conversion based on preprocess.proto github link.
