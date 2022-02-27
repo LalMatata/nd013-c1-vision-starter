@@ -195,6 +195,7 @@ We tried random pixel scale, add random black patches and gray scale image conve
 
 The below processing operations are added in data augmentation new config file 
 
+'''
 random_horizontal_flip 
 random_crop_image
 random_rgb_to_gray
@@ -202,7 +203,7 @@ random_black_patches
 random_pixel_value_scale
 random_distort_color
 random_jpeg_quality
-
+'''
 
 <img width="407" alt="截屏2022-02-27 下午12 23 24" src="https://user-images.githubusercontent.com/27455919/155868202-82e5654e-893c-4beb-8e06-2401af087d1a.png">
 
