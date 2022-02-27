@@ -166,6 +166,8 @@ We draw 10000 random sample using shuffle function from the dataset. In the imag
 <img width="339" alt="截屏2022-02-27 下午12 15 14" src="https://user-images.githubusercontent.com/27455919/155868391-bb207b9a-3f0b-47a9-af5b-2ac97aaf348b.png">
 <img width="380" alt="截屏2022-02-27 下午12 15 19" src="https://user-images.githubusercontent.com/27455919/155868393-c2bade5a-e25f-4b8f-b8eb-b04f369e4275.png">
 
+<img width="428" alt="截屏2022-02-27 下午12 16 17" src="https://user-images.githubusercontent.com/27455919/155868428-d06a5fd5-81c5-434c-b68a-7edc00bf9038.png">
+
 #### Cross validation
 We implement a 8:1:1 cross validation strategy in term of training/validation/test data set. Each set has its own folder in the data/waymo folder, we used this split to make sure a proper training while making sure the model doesn't overfit.
 
@@ -177,8 +179,6 @@ However the preliminary result indicated the loss is still very high at around 0
 We therefore added mutliple data augmentation strategies to the pipeline in order to increase robustness of the model.
 
 I tried 2500 steps and then 5000 steps.
-<img width="1440" alt="截屏2022-02-27 上午2 27 42" src="https://user-images.githubusercontent.com/27455919/155868379-f0f722bb-e057-48e0-9c20-f55482309b4f.png">
-
 <img width="1066" alt="截屏2022-02-27 上午2 37 09" src="https://user-images.githubusercontent.com/27455919/155867999-93ddb286-2eac-4f80-bcfd-c4a605deaab2.png">
 <img width="1437" alt="截屏2022-02-27 上午2 28 53" src="https://user-images.githubusercontent.com/27455919/155868056-1b1853fc-18dc-428f-bca0-4d1bc7291999.png">
 
@@ -194,6 +194,7 @@ Both encounter OOM memory problem, tried reset data and delete checkpoint file b
 We tried random pixel scale, add random black patches and gray scale image conversion based on preprocess.proto github link.
 
 The below processing operations are added in data augmentation new config file 
+
 random_horizontal_flip 
 random_crop_image
 random_rgb_to_gray
