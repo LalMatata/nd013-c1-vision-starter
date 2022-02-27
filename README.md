@@ -48,7 +48,7 @@ Follow [the README therein](./build/README.md) to create a docker container and 
 
 ### Download and process the data
 
-**Note:** ”If you are using the classroom workspace, we have already completed the steps in the section for you. You can find the downloaded and processed files within the `/home/workspace/data/preprocessed_data/` directory. Check this out then proceed to the **Exploratory Data Analysis** part.
+Note:”If you are using the classroom workspace, we have already completed the steps in the section for you. You can find the downloaded and processed files within the `/home/workspace/data/preprocessed_data/` directory. Check this out then proceed to the **Exploratory Data Analysis** part.
 
 The first goal of this project is to download the data from the Waymo's Google Cloud bucket to your local machine. For this project, we only need a subset of the data provided (for example, we do not need to use the Lidar data). Therefore, we are going to download and trim immediately each file. In `download_process.py`, you can view the `create_tf_example` function, which will perform this processing. This function takes the components of a Waymo Tf record and saves them in the Tf Object Detection api format. An example of such function is described [here](https://tensorflow-object-detection-api-tutorial.readthedocs.io/en/latest/training.html#create-tensorflow-records). We are already providing the `label_map.pbtxt` file.
 
@@ -138,6 +138,9 @@ Finally, you can create a video of your model's inferences for any tf record fil
 python inference_video.py --labelmap_path label_map.pbtxt --model_path experiments/reference/exported/saved_model --tf_record_path /data/waymo/testing/segment-12200383401366682847_2552_140_2572_140_with_camera_labels.tfrecord --config_path experiments/reference/pipeline_new.config --output_path animation.gif
 ```
 
+
+```
+# Project Write Up
 ## Submission Template
 
 ### Project overview
@@ -157,8 +160,11 @@ The Waymo Dataset provided in the workspace consisted of image in urban environm
 There were three main classes of bounding box, cars, pedestrian and cyclist. 
 A 10 image batch was taken from the sample dataset each time and we saw images reflecting random distribution of scene in urban environment.
 We draw 10000 random sample using shuffle function from the dataset. In the image in the EDA notebook, we can see car class takes around 70-80 percent of the overall labels, much more than pedestrian class and cyclist only take a minor portion of the overall class distribution.
-
-
+<img width="317" alt="截屏2022-02-27 下午12 14 55" src="https://user-images.githubusercontent.com/27455919/155868388-c4bd7397-dc64-420b-bd7c-d70bac8121c1.png">
+<img width="317" alt="截屏2022-02-27 下午12 15 03" src="https://user-images.githubusercontent.com/27455919/155868389-913ea22f-ca01-4e94-b963-5436643e8294.png">
+<img width="376" alt="截屏2022-02-27 下午12 15 10" src="https://user-images.githubusercontent.com/27455919/155868390-c760e1f4-d7fd-47bb-85bd-581a821f0c82.png">
+<img width="339" alt="截屏2022-02-27 下午12 15 14" src="https://user-images.githubusercontent.com/27455919/155868391-bb207b9a-3f0b-47a9-af5b-2ac97aaf348b.png">
+<img width="380" alt="截屏2022-02-27 下午12 15 19" src="https://user-images.githubusercontent.com/27455919/155868393-c2bade5a-e25f-4b8f-b8eb-b04f369e4275.png">
 
 #### Cross validation
 We implement a 8:1:1 cross validation strategy in term of training/validation/test data set. Each set has its own folder in the data/waymo folder, we used this split to make sure a proper training while making sure the model doesn't overfit.
@@ -171,9 +177,18 @@ However the preliminary result indicated the loss is still very high at around 0
 We therefore added mutliple data augmentation strategies to the pipeline in order to increase robustness of the model.
 
 I tried 2500 steps and then 5000 steps.
+<img width="1440" alt="截屏2022-02-27 上午2 27 42" src="https://user-images.githubusercontent.com/27455919/155868379-f0f722bb-e057-48e0-9c20-f55482309b4f.png">
 
 <img width="1066" alt="截屏2022-02-27 上午2 37 09" src="https://user-images.githubusercontent.com/27455919/155867999-93ddb286-2eac-4f80-bcfd-c4a605deaab2.png">
 <img width="1437" alt="截屏2022-02-27 上午2 28 53" src="https://user-images.githubusercontent.com/27455919/155868056-1b1853fc-18dc-428f-bca0-4d1bc7291999.png">
+
+<img width="1918" alt="截屏2022-02-27 上午1 56 04" src="https://user-images.githubusercontent.com/27455919/155868340-c756b02d-bb95-4cf2-9b52-2fac629eab29.png">
+<img width="1919" alt="截屏2022-02-27 上午1 55 38" src="https://user-images.githubusercontent.com/27455919/155868344-b4a62186-9986-4546-b8c3-b4e32bbfa18d.png">
+<img width="1919" alt="截屏2022-02-27 上午2 05 12" src="https://user-images.githubusercontent.com/27455919/155868350-ea7607d2-a3d2-41a2-830f-2a2a3df337a3.png">
+<img width="1338" alt="截屏2022-02-27 上午1 56 56" src="https://user-images.githubusercontent.com/27455919/155868375-742fb225-d39e-4e74-822a-099fc7d784bc.png">
+
+Both encounter OOM memory problem, tried reset data and delete checkpoint file but didn't work
+<img width="1336" alt="截屏2022-02-27 上午2 01 42" src="https://user-images.githubusercontent.com/27455919/155868362-2f60cbff-5c91-425b-92bc-c44ac995d384.png">
 
 #### Improve on the reference
 We tried random pixel scale, add random black patches and gray scale image conversion based on preprocess.proto github link.
