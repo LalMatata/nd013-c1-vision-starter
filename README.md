@@ -158,10 +158,6 @@ There were three main classes of bounding box, cars, pedestrian and cyclist.
 A 10 image batch was taken from the sample dataset each time and we saw images reflecting random distribution of scene in urban environment.
 We draw 10000 random sample using shuffle function from the dataset. In the image in the EDA notebook, we can see car class takes around 70-80 percent of the overall labels, much more than pedestrian class and cyclist only take a minor portion of the overall class distribution.
 
-<img width="380" alt="截屏2022-02-27 下午12 15 19" src="https://user-images.githubusercontent.com/27455919/155867973-77f6defc-cce6-4078-9f9a-bb8b75c34e1e.png">
-
-<img width="428" alt="截屏2022-02-27 下午12 16 17" src="https://user-images.githubusercontent.com/27455919/155867989-5cdc057f-736c-4cf8-bcda-533cbd584e86.png">
-
 
 
 #### Cross validation
@@ -190,5 +186,8 @@ random_black_patches
 random_pixel_value_scale
 random_distort_color
 random_jpeg_quality
+
+
+<img width="407" alt="截屏2022-02-27 下午12 23 24" src="https://user-images.githubusercontent.com/27455919/155868202-82e5654e-893c-4beb-8e06-2401af087d1a.png">
 
 Result are exported to animation gif and encounter ffmege failed bug(prompted please use Pillow) probably due to OOM problem
